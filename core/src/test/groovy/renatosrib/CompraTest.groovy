@@ -1,5 +1,3 @@
-package src.test.groovy
-
 import org.junit.Test
 import src.main.groovy.entidades.Compra
 import src.main.groovy.entidades.ItemDaCompra

@@ -1,9 +1,9 @@
-package src.main.groovy.entidades
+package renatosrib.entidades
 
 /**
  * Representa um item de uma compra
  */
 class ItemDaCompra {
     Produto produto
-    Integer quantidade
+    BigDecimal quantidade
 }

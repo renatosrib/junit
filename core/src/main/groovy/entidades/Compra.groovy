@@ -1,4 +1,4 @@
-package src.main.groovy.entidades
+package renatosrib.entidades
 
 /**
  * Representa uma compra
