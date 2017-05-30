@@ -1,4 +1,4 @@
-package renatosrib.entidades
+package entidades
 
 /**
  * Representa um item de uma compra

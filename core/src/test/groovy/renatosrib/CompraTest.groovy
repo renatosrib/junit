@@ -1,42 +1,62 @@
+package renatosrib
+
+import entidades.Compra
+import entidades.ItemDaCompra
+import entidades.Produto
 import org.junit.Test
-import src.main.groovy.entidades.Compra
-import src.main.groovy.entidades.ItemDaCompra
-import src.main.groovy.entidades.Produto
+
+import static org.junit.Assert.assertEquals
+
 
 /**
  * Testes relacionados a compra
  */
 class CompraTest {
+    Produto produto
+    Compra compra
 
     @Test
-    public void deveAdicionarItemACompra() {
-        //Dado
-        Compra compra = new Compra()
-        Produto produto1 = new Produto(nome: 'Teste', preco: new BigDecimal('12.90'))
-        ItemDaCompra itemDaCompra = new ItemDaCompra(produto: produto1, quantidade: 2)
-
+    void compraDeProdutosQuantidadeInteira() {
+        //Given
+        this.produto = new Produto(nome: 'Chocolate em barra', preco: new BigDecimal(5.0));
+        ItemDaCompra itemDaCompra = new ItemDaCompra(produto: produto, quantidade: 2);
+        this.compra = new Compra();
         //When
-        compra.adicionarItem(itemDaCompra)
-
+        this.compra.adicionarItem(itemDaCompra);
         //Then
-        assert compra.itens.contains(itemDaCompra)
+        assertEquals(compra.subTotal(), 10, 0);
     }
 
     @Test
-    public void deveCalcularSubTotal() {
-        //Dado
-        Compra compra = new Compra()
-        Produto produto1 = new Produto(nome: 'Teste', preco: new BigDecimal('12.00'))
-        Produto produto2 = new Produto(nome: 'Teste', preco: new BigDecimal('24.00'))
-        ItemDaCompra itemDaCompra1 = new ItemDaCompra(produto: produto1, quantidade: 2)
-        ItemDaCompra itemDaCompra2 = new ItemDaCompra(produto: produto2, quantidade: 1)
-        compra.adicionarItem(itemDaCompra1)
-        compra.adicionarItem(itemDaCompra2)
+    void compraComQuantidadeDecimal() {
+        //Given
+        this.produto = new Produto(nome: 'Limão', preco: new BigDecimal(7.0));
+        ItemDaCompra itemDaCompra = new ItemDaCompra(produto: produto, quantidade: 1.5);
+        this.compra = new Compra();
+        //When
+        this.compra.adicionarItem(itemDaCompra);
+        //Then
+        assertEquals(compra.subTotal(), 10.50, 0);
+    }
+
+    @Test
+    void compraDeDoisProdutosNaMesmaCompra() {
+        //Given
+        Produto limao = new Produto(nome: 'Limão', preco: new BigDecimal(7.0));
+        Produto chocolate =  new Produto(nome: 'Chocolate em barra', preco: new BigDecimal(5.0));
+        List<ItemDaCompra> items  = [
+                new ItemDaCompra(produto: limao, quantidade: 1.5),
+                new ItemDaCompra(produto: chocolate, quantidade: 2),
+        ]
+        this.compra = new Compra();
 
         //When
-        BigDecimal subTotal = compra.subTotal()
+        //Adiciona itens à compra
+        items.each { itemDaCompra ->
+            this.compra.adicionarItem(itemDaCompra);
 
+        }
         //Then
-        assert subTotal == 48
+        assertEquals(compra.subTotal(), 20.50, 0);
     }
 }

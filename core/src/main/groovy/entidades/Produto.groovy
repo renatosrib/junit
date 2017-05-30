@@ -1,4 +1,4 @@
-package renatosrib.entidades
+package entidades
 
 /**
  * Produto
